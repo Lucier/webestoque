@@ -1,0 +1,29 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="content">
+
+		<f:metadata>
+			<o:viewParam name="formaDePagamento" value="#{cadastroFormaDePagamentoBean.formaDePagamento}" />
+		</f:metadata>
+
+		<h:form>
+			<br />
+			<br />
+			<p:messages autoUpdate="true" closable="true" />
+
+			<h1 class="aw-page-title">#{cadastroFormaDePagamentoBean.editando ? "Edição de formas de pagamento" : "Nova forma de pagamento"}</h1>
+
+			<ui:include src="/WEB-INF/templates/formaDePagamento/BotoesFormaDePagamento.xhtml" />
+
+			<ui:include src="/WEB-INF/templates/formaDePagamento/CapaFormaDePagamento.xhtml" />
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

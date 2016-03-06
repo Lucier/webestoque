@@ -1,0 +1,19 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<div class="ui-fluid">
+		<p:panelGrid columns="2" layout="grid"
+			style="margin-top: 20px; margin-bottom: 40px"
+			styleClass="panelgrid-noborder"
+			columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+				
+				<p:outputLabel value="Descrição*" for="descricao" />
+				<p:inputText id="descricao" value="#{cadastroFormaDePagamentoBean.formaDePagamento.descricao}"/>
+				
+		</p:panelGrid>
+	</div>
+
+</ui:composition>
