@@ -1,0 +1,17 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:toolbar style="margin-top: 20px">
+		<p:toolbarGroup>
+			<p:button icon="fa  fa-fw  fa-plus" value="Novo" outcome="/banco/CadastroBanco.xhtml" />
+			<p:commandButton icon="fa fa-faw fa-floppy-o" value="Salvar" action="#{cadastroBancoBean.salvar}"
+			update="@form" ajax="false"/>
+		</p:toolbarGroup>
+		<p:toolbarGroup align="right">
+			<p:button icon="fa fa-faw fa-search" value="Pesquisa" outcome="/banco/PesquisaBanco.xhtml"/>
+		</p:toolbarGroup>
+	</p:toolbar>
+</ui:composition>

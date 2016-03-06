@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+		<h:form>
+			<div
+				style="height: 30px; margin-top: 20px; margin-left: 10px; font-weight: bold; font-size: 14px">
+				<h:outputLabel value="Bem vindo: João Jose"></h:outputLabel>
+			</div>
+			<p:panelMenu styleClass="aw-menu">
+				<p:submenu label="Cadastros">
+					<p:menuitem icon="fa  fa-fw  fa-user" value="Aluno" />
+					<p:menuitem icon="fa  fa-fw fa-university" value="Banco" outcome="/banco/PesquisaBanco.xhtml"/>
+					<p:menuitem icon="fa  fa-fw  fa-graduation-cap"  value="Curso" />
+					<p:menuitem icon="fa  fa-fw  fa-book" value="Disciplina" />
+					
+				</p:submenu>
+			</p:panelMenu>
+		</h:form>
+</ui:composition>
