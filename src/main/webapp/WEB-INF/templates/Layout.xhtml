@@ -30,7 +30,8 @@
 	</header>
 
 	<p:ajaxStatus onstart="PF('ajaxLoading').show()" oncomplete="PF('ajaxLoading').hide()" />
-	<p:dialog widgetVar="ajaxLoading" header="Aguarde..." resizable="false" closable="false" modal="true" responsive="true">
+	<p:dialog widgetVar="ajaxLoading" resizable="false"
+			draggable="false" showHeader="false" closable="false" modal="true">
 		<p:graphicImage library="algaworks" name="images/loading.gif" />
 	</p:dialog>
 

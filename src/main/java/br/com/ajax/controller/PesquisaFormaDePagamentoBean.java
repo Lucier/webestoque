@@ -1,12 +1,15 @@
 package br.com.ajax.controller;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 
 import br.com.ajax.model.FormaDePagamento;
 import br.com.ajax.repository.FormaDePagamentoRepository;
@@ -22,22 +25,35 @@ public class PesquisaFormaDePagamentoBean implements Serializable {
 	@Inject
 	private FormaDePagamentoRepository formaDePagamentoRepository;
 
-	private FormaDePagamentoFilter formaDePagamentoFilter;
-	private List<FormaDePagamento> formasDePagamentoFiltradas;
+	private FormaDePagamentoFilter formaDePagamentoFilter = new FormaDePagamentoFilter();
 	private FormaDePagamento formaDePagamentoSelecionada;
+	private LazyDataModel<FormaDePagamento> formaDePagamentoModel;
 
 	public PesquisaFormaDePagamentoBean() {
-		formaDePagamentoFilter = new FormaDePagamentoFilter();
-		formasDePagamentoFiltradas = new ArrayList<>();
-	}
+		formaDePagamentoModel = new LazyDataModel<FormaDePagamento>() {
 
-	public void pesquisar() {
-		formasDePagamentoFiltradas = formaDePagamentoRepository.formasDePagamentoFiltradas(formaDePagamentoFilter);
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public List<FormaDePagamento> load(int first, int pageSize, String sortField, SortOrder sortOrder,
+					Map<String, Object> filters) {
+
+				formaDePagamentoFilter.setPrimeiroRegistro(first);
+				formaDePagamentoFilter.setQuantidadeRegistros(pageSize);
+				formaDePagamentoFilter.setAscendente(SortOrder.ASCENDING.equals(sortOrder));
+				formaDePagamentoFilter.setPropriedadeOrdenacao(sortField);
+
+				setRowCount(formaDePagamentoRepository.quantidadeFormasDePagamentoFiltradas(formaDePagamentoFilter));
+
+				return formaDePagamentoRepository.formasDePagamentoFiltradas(formaDePagamentoFilter);
+
+			}
+		};
+
 	}
 
 	public void excluir() {
 		formaDePagamentoRepository.remover(formaDePagamentoSelecionada);
-		formasDePagamentoFiltradas.remove(formaDePagamentoSelecionada);
 
 		FacesUtil.addInfoMessage(
 				"Forma de Pagamento " + formaDePagamentoSelecionada.getDescricao() + " excluída com sucesso!");
@@ -51,20 +67,16 @@ public class PesquisaFormaDePagamentoBean implements Serializable {
 		this.formaDePagamentoFilter = formaDePagamentoFilter;
 	}
 
-	public List<FormaDePagamento> getFormasDePagamentoFiltradas() {
-		return formasDePagamentoFiltradas;
-	}
-
-	public void setFormasDePagamentoFiltradas(List<FormaDePagamento> formasDePagamentoFiltradas) {
-		this.formasDePagamentoFiltradas = formasDePagamentoFiltradas;
-	}
-
 	public FormaDePagamento getFormaDePagamentoSelecionada() {
 		return formaDePagamentoSelecionada;
 	}
 
 	public void setFormaDePagamentoSelecionada(FormaDePagamento formaDePagamentoSelecionada) {
 		this.formaDePagamentoSelecionada = formaDePagamentoSelecionada;
+	}
+
+	public LazyDataModel<FormaDePagamento> getFormaDePagamentoModel() {
+		return formaDePagamentoModel;
 	}
 
 }

@@ -13,6 +13,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import br.com.ajax.model.Banco;
@@ -70,14 +71,37 @@ public class BancoRepository implements Serializable {
 
 	@SuppressWarnings("unchecked")
 	public List<Banco> bancosFiltrados(BancoFilter bancoFilter) {
+		Criteria criteria = criarCriteriaParaFiltro(bancoFilter);
+		
+		criteria.setFirstResult(bancoFilter.getPrimeiroRegistro());
+		criteria.setMaxResults(bancoFilter.getQuantidadeRegistros());
+		
+		if(bancoFilter.isAscendente() && bancoFilter.getPropriedadeOrdenacao() != null){
+			criteria.addOrder(Order.asc(bancoFilter.getPropriedadeOrdenacao()));
+		}else if (bancoFilter.getPropriedadeOrdenacao() != null){
+			criteria.addOrder(Order.desc(bancoFilter.getPropriedadeOrdenacao()));
+		}
+		
+		return criteria.list();
+	}
+	
+	public int quantidadeBancosFiltrados(BancoFilter bancoFilter){
+		Criteria criteria = criarCriteriaParaFiltro(bancoFilter);
+		
+		criteria.setProjection(Projections.rowCount());
+		
+		return ((Number) criteria.uniqueResult()).intValue();
+	}
+	
+	private Criteria criarCriteriaParaFiltro(BancoFilter bancoFilter){
 		Session session = manager.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Banco.class);
-
-		if (StringUtils.isNotBlank(bancoFilter.getNome())) {
+		
+		if(StringUtils.isNotEmpty(bancoFilter.getNome())){
 			criteria.add(Restrictions.ilike("nome", bancoFilter.getNome(), MatchMode.ANYWHERE));
 		}
-
-		return criteria.addOrder(Order.asc("nome")).list();
+		
+		return criteria;
 	}
 
 }
