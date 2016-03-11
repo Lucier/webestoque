@@ -53,7 +53,6 @@ public class PesquisaBancoBean implements Serializable {
 
 	public void excluir() {
 		bancoRepository.remover(bancoSelecionado);
-
 		FacesUtil.addInfoMessage("Banco " + bancoSelecionado.getNome() + " excluído com sucesso!");
 	}
 

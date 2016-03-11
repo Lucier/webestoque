@@ -13,12 +13,12 @@
 
 			<p:messages autoUpdate="true" closable="true" />
 			<p:toolbar style="margin-top: 20px">
-			 
+
 				<p:toolbarGroup>
-				<p:commandButton icon="fa fa-faw fa-search" value="Pesquisar"
-						 update="@form" />
+					<p:commandButton icon="fa fa-faw fa-search" value="Pesquisar"
+						update="@form" />
 				</p:toolbarGroup>
-			
+
 				<p:toolbarGroup align="right">
 					<p:button icon="fa  fa-fw  fa-plus" value="Novo"
 						outcome="/formaDePagamento/CadastroFormaDePagamento.xhtml" />
@@ -63,10 +63,13 @@
 				</p:column>
 			</p:dataTable>
 
-			<p:confirmDialog header="Exclusão de forma de pagamento"
-				message="Tem certeza que deseja excluir a forma de pagamento #{pesquisaformaDePagamentoBean.formaDePagamentoSelecionada.descricao}?"
+			<p:dialog header="Exclusão de forma de pagamento"
 				widgetVar="confirmacaoExclusao" id="confirmacaoExclusaoDialog"
-				severity="alert">
+				resizable="false" responsive="true" modal="true">
+				<h:outputText
+					value="Tem certeza que deseja excluir a
+				forma de pagamento #{pesquisaformaDePagamentoBean.formaDePagamentoSelecionada.descricao}?" />
+				<br /><br />
 				<p:button value="Não"
 					onclick="PF('confirmacaoExclusao').hide(); return false;" />
 				<p:commandButton value="Sim"
@@ -74,7 +77,7 @@
 					action="#{pesquisaFormaDePagamentoBean.excluir}" process="@this"
 					update=":frmPesquisaFormaDePagamento:formasDePagamentoTable"
 					ajax="false" />
-			</p:confirmDialog>
+			</p:dialog>
 
 		</h:form>
 	</ui:define>
